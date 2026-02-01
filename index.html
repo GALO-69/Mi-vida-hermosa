@@ -104,6 +104,22 @@
             letter-spacing: 2px;
         }
 
+        .surprise-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .surprise-btn:hover {
+            opacity: 1;
+        }
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -465,6 +481,7 @@
         <div class="header">
             <h1>Nuestros Momentos Juntos</h1>
             <p>Cada foto cuenta nuestra historia</p>
+            <button class="surprise-btn" onclick="surprise()">💖</button>
         </div>
 
         <!-- Galería de fotos -->
@@ -544,6 +561,12 @@
         </div>
     </div>
 
+    <!-- Música de fondo -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
     <script>
         function createConfetti() {
             for (let i = 0; i < 50; i++) {
@@ -595,6 +618,11 @@
             }, 2000);
         }
 
+        function surprise() {
+            createConfetti();
+            alert('¡Sorpresa! Te amo más de lo que imaginas 💕');
+        }
+
         // Hacer que el botón "No" se mueva alejándose del mouse
         document.getElementById('btnNo').addEventListener('mouseover', function(event) {
             const mouseX = event.clientX;
@@ -612,6 +640,21 @@
                 this.style.transform = 'translate(' + moveX + 'px, ' + moveY + 'px)';
             }
         });
+
+        // Lluvia continua de corazones
+        setInterval(createFloatingHeart, 2000);
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            heart.style.animationDelay = '0s';
+            document.querySelector('.floating-hearts').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 15000); // Remover después de la animación
+        }
     </script>
 </body>
 </html>
