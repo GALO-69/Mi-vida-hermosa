@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín? ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose: #d4567d;
+            --deep-rose: #b83b5e;
+            --cream: #fff5f5;
+            --charcoal: #2a2a2a;
+            --gold: #d4af37;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #ffe5ec 100%);
+            overflow-x: hidden;
+            color: var(--charcoal);
+        }
+
+        /* Corazones flotantes de fondo */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(212, 86, 125, 0.15);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .heart:nth-child(2) { left: 20%; animation-delay: 2s; font-size: 25px; }
+        .heart:nth-child(3) { left: 40%; animation-delay: 4s; font-size: 18px; }
+        .heart:nth-child(4) { left: 60%; animation-delay: 1s; font-size: 22px; }
+        .heart:nth-child(5) { left: 80%; animation-delay: 3s; font-size: 28px; }
+        .heart:nth-child(6) { left: 15%; animation-delay: 5s; font-size: 24px; }
+        .heart:nth-child(7) { left: 75%; animation-delay: 2.5s; font-size: 20px; }
+        .heart:nth-child(8) { left: 35%; animation-delay: 4.5s; font-size: 26px; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header con título */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out forwards;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--deep-rose);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--charcoal);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Galería de fotos tipo mosaico */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px 20px;
+            margin-bottom: 60px;
+        }
+
+        .reasons-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .reasons-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--deep-rose);
+            margin-bottom: 40px;
+        }
+
+        .reason-frame .photo-placeholder {
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--charcoal);
+        }
+
+        .photo-frame {
+            position: relative;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .photo-frame:nth-child(1) { animation-delay: 0.2s; }
+        .photo-frame:nth-child(2) { animation-delay: 0.4s; }
+        .photo-frame:nth-child(3) { animation-delay: 0.6s; }
+        .photo-frame:nth-child(4) { animation-delay: 0.8s; }
+        .photo-frame:nth-child(5) { animation-delay: 1s; }
+        .photo-frame:nth-child(6) { animation-delay: 1.2s; }
+        .photo-frame:nth-child(7) { animation-delay: 1.4s; }
+        .photo-frame:nth-child(8) { animation-delay: 1.6s; }
+
+        .photo-frame:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 60px rgba(212, 86, 125, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #ffd6e0 0%, #ffb3c6 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .photo-caption {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.95rem;
+            color: var(--deep-rose);
+            font-style: italic;
+        }
+
+        /* Sección de la pregunta */
+        .question-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,229,236,0.9) 100%);
+            border-radius: 30px;
+            margin: 40px 20px;
+            box-shadow: 0 20px 60px rgba(184, 59, 94, 0.2);
+            opacity: 0;
+            animation: fadeInScale 1s ease-out 1.8s forwards;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .question-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--deep-rose);
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .heart-divider {
+            font-size: 2rem;
+            color: var(--rose);
+            margin: 30px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .btn {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--rose) 0%, var(--deep-rose) 100%);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(212, 86, 125, 0.4);
+        }
+
+        .btn-no {
+            background: white;
+            color: var(--deep-rose);
+            border: 2px solid var(--deep-rose);
+        }
+
+        .btn-no:hover {
+            background: var(--cream);
+        }
+
+        /* Mensaje de respuesta */
+        .response-message {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .response-message.show {
+            display: block;
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .response-message h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-rose);
+            margin-bottom: 15px;
+        }
+
+        .response-message p {
+            font-size: 1.2rem;
+            color: var(--charcoal);
+            line-height: 1.8;
+        }
+
+        /* Confetti cuando dice que sí */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--rose);
+            position: fixed;
+            top: -10px;
+            z-index: 1000;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 40px 10px 30px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+                padding: 20px 10px;
+            }
+
+            .photo-frame {
+                padding: 10px;
+            }
+
+            .question-section {
+                padding: 50px 15px;
+                margin: 30px 10px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                margin-top: 30px;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+
+            .response-message {
+                padding: 20px;
+                margin-top: 30px;
+            }
+
+            .floating-hearts {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+
+            .header p {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
+
+            .question-section h2 {
+                font-size: clamp(1.8rem, 7vw, 2.5rem);
+                margin-bottom: 30px;
+            }
+
+            .heart-divider {
+                font-size: 1.5rem;
+                margin: 20px 0;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .photo-frame {
+                padding: 8px;
+            }
+
+            .photo-caption {
+                font-size: 0.85rem;
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Corazones flotantes -->
+    <div class="floating-hearts">
+        <div class="heart">❤️</div>
+        <div class="heart">💕</div>
+        <div class="heart">💖</div>
+        <div class="heart">💗</div>
+        <div class="heart">💝</div>
+        <div class="heart">❤️</div>
+        <div class="heart">💕</div>
+        <div class="heart">💖</div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Nuestros Momentos Juntos</h1>
+            <p>Cada foto cuenta nuestra historia</p>
+        </div>
+
+        <!-- Galería de fotos -->
+        <div class="gallery">
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./IMG_20241227_202035_252.jpg" alt=""></div>
+                <div class="photo-caption">Nuestro primer momento</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./IMG_20250110_224815_287.jpg" alt=""></div>
+                <div class="photo-caption">Riendo juntos</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./IMG_20250309_200232_893.jpg" alt=""></div>
+                <div class="photo-caption">Aventuras compartidas</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./WhatsApp Image 2026-02-01 at 18.11.18.jpeg" alt=""></div>
+                <div class="photo-caption">Momentos especiales</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./IMG_20250205_184708_356.jpg" alt=""></div>
+                <div class="photo-caption">Amor verdadero</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./IMG_20250201_231703_843.jpg" alt=""></div>
+                <div class="photo-caption">Juntos para siempre</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./WhatsApp Image 2026-02-01 at 18.11.18 (1).jpeg" alt=""></div>
+                <div class="photo-caption">Recuerdos inolvidables</div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-placeholder"><img src="./WhatsApp Image 2026-02-01 at 18.11.18 (2).jpeg" alt=""></div>
+                <div class="photo-caption">Nuestra felicidad</div>
+            </div>
+        </div>
+
+        <!-- Razones por las que te amo -->
+        <div class="reasons-section">
+            <h2>Motivos por los que te amo</h2>
+            <div class="gallery">
+                <div class="photo-frame reason-frame">
+                    <div class="photo-placeholder">Tu sonrisa ilumina mi día</div>
+                    <div class="photo-caption">Cada vez que sonríes, mi mundo se llena de luz</div>
+                </div>
+                <div class="photo-frame reason-frame">
+                    <div class="photo-placeholder">Me haces reír como nadie más</div>
+                    <div class="photo-caption">Tus bromas y alegría son mi medicina diaria</div>
+                </div>
+                <div class="photo-frame reason-frame">
+                    <div class="photo-placeholder">Eres mi confidente y mejor amiga</div>
+                    <div class="photo-caption">Contigo puedo ser yo mismo, sin máscaras</div>
+                </div>
+                <div class="photo-frame reason-frame">
+                    <div class="photo-placeholder">Tu amor me inspira a ser mejor</div>
+                    <div class="photo-caption">Me motivas a crecer y alcanzar mis sueños</div>
+                </div>
+                <div class="photo-frame reason-frame">
+                    <div class="photo-placeholder">Contigo, cada día es una aventura</div>
+                    <div class="photo-caption">La vida a tu lado es emocionante y llena de sorpresas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de la pregunta -->
+        <div class="question-section">
+            <h2>¿Quieres ser mi San Valentín?</h2>
+            <div class="heart-divider">❤️ 💕 ❤️</div>
+            
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="responderSi()">¡Sí, mil veces sí! 💕</button>
+                <button class="btn btn-no" id="btnNo">Déjame pensarlo 🤔</button>
+            </div>
+
+            <div id="responseMessage" class="response-message"></div>
+        </div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = ['#d4567d', '#b83b5e', '#d4af37', '#ff69b4', '#ff1493'][Math.floor(Math.random() * 5)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        function responderSi() {
+            const message = document.getElementById('responseMessage');
+            message.innerHTML = `
+                <h3>¡Eres la persona más especial de mi vida! 💕</h3>
+                <p>No puedo esperar para celebrar este San Valentín contigo. Cada día a tu lado es un regalo. Te amo con todo mi corazón. ❤️</p>
+            `;
+            message.classList.add('show');
+            createConfetti();
+            
+            // Ocultar botones
+            document.querySelector('.buttons').style.display = 'none';
+        }
+
+        function responderNo() {
+            const message = document.getElementById('responseMessage');
+            message.innerHTML = `
+                <h3>¿Estás segura? 🥺</h3>
+                <p>Prometo hacerte sonreír cada día, llenar tu vida de amor y ser tu mejor compañero de aventuras. Dale otra oportunidad a mi pregunta... ❤️</p>
+            `;
+            message.classList.add('show');
+            
+            // Hacer que el botón "No" se mueva
+            const btnNo = document.querySelector('.btn-no');
+            const btnYes = document.querySelector('.btn-yes');
+            
+            btnYes.style.animation = 'heartbeat 0.5s ease-in-out 3';
+            
+            setTimeout(() => {
+                message.innerHTML = `
+                    <h3>Piénsalo bien... 💭</h3>
+                    <p>¿De verdad quieres perderte todo el amor que tengo para darte este San Valentín? 🌹</p>
+                `;
+            }, 2000);
+        }
+
+        // Hacer que el botón "No" se mueva alejándose del mouse
+        document.getElementById('btnNo').addEventListener('mouseover', function(event) {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            const btnRect = this.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+            const deltaX = btnCenterX - mouseX;
+            const deltaY = btnCenterY - mouseY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            if (distance < 150) { // Si el mouse está cerca, mover alejándose
+                const moveX = deltaX > 0 ? Math.random() * 200 + 100 : -(Math.random() * 200 + 100);
+                const moveY = deltaY > 0 ? Math.random() * 200 + 100 : -(Math.random() * 200 + 100);
+                this.style.transform = 'translate(' + moveX + 'px, ' + moveY + 'px)';
+            }
+        });
+    </script>
+</body>
+</html>
